@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no" />
+  <meta name="theme-color" content="#eef3fb" />
+  <title>DE Verbs iPhone</title>
+  <style>
+    :root{
+      --bg:#eef3fb;
+      --bg-soft:#f7f9fd;
+      --card:rgba(255,255,255,.96);
+      --text:#101828;
+      --muted:#667085;
+      --line:#e5eaf3;
+      --blue:#2f6df6;
+      --blue-2:#5a8cff;
+      --green:#16a34a;
+      --orange:#d97706;
+      --red:#dc2626;
+      --violet:#7c3aed;
+      --shadow:0 12px 30px rgba(16,24,40,.08);
+      --radius:24px;
+      --safe-top:max(12px, env(safe-area-inset-top));
+      --safe-bottom:max(16px, env(safe-area-inset-bottom));
+      --header-h:122px;
+      --tabbar-h:92px;
+    }
+
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+      -webkit-touch-callout:none;
+    }
+
+    html,body{
+      margin:0;
+      min-height:100%;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",Inter,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(47,109,246,.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(124,58,237,.08), transparent 18%),
+        linear-gradient(180deg,#f4f7fc,#eef3fb 44%,#f8fafd);
+    }
+
+    body{
+      overscroll-behavior:none;
+    }
+
+    button,input,select{
+      font:inherit;
+      -webkit-appearance:none;
+      appearance:none;
+      font-size:16px;
+    }
+
+    input,select{
+      width:100%;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      min-height:24px;
+    }
+
+    select{
+      background-image:linear-gradient(45deg, transparent 50%, #667085 50%), linear-gradient(135deg, #667085 50%, transparent 50%);
+      background-position:calc(100% - 16px) calc(50% - 3px), calc(100% - 10px) calc(50% - 3px);
+      background-size:6px 6px, 6px 6px;
+      background-repeat:no-repeat;
+      padding-right:28px;
+    }
+
+    .app{
+      max-width:100%;
+      width:100%;
+      min-height:100dvh;
+      padding:var(--safe-top) 12px calc(var(--tabbar-h) + var(--safe-bottom) + 12px);
+    }
+
+    .top{
+      position:sticky;
+      top:0;
+      z-index:20;
+      padding-bottom:8px;
+      background:linear-gradient(180deg, rgba(244,247,252,.98), rgba(244,247,252,.84) 74%, rgba(244,247,252,0));
+      backdrop-filter:blur(14px);
+    }
+
+    .hero{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:4px 2px 12px;
+    }
+
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:900;
+      font-size:18px;
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      box-shadow:var(--shadow);
+      flex:0 0 auto;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:22px;
+      line-height:1.05;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+
+    .hero p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.25;
+    }
+
+    .search-row,.filters-row,.action-grid,.action-row,.test-grid,.stats-grid,.stack,.screens{
+      display:grid;
+      gap:10px;
+    }
+
+    .search-row,.filters-row,.action-grid,.action-row{
+      grid-template-columns:1fr;
+    }
+
+    .box,.card,.tabbar-inner{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.92);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+    }
+
+    .box{
+      border-radius:18px;
+      padding:14px 16px;
+    }
+
+    .card{
+      border-radius:26px;
+      padding:16px;
+    }
+
+    .section-title{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin:0 0 10px;
+    }
+
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .chip,.pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .chip{
+      padding:9px 11px;
+      background:#edf3ff;
+      color:#2d57c9;
+    }
+
+    .pill{
+      padding:6px 10px;
+    }
+
+    .weak{background:#ecfdf5;color:#166534}
+    .strong{background:#eff6ff;color:#1d4ed8}
+    .irregular{background:#fff7ed;color:#c2410c}
+    .group-pill{background:#f5f3ff;color:#6d28d9}
+
+    .helper{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+
+    .trainer{
+      min-height:calc(100dvh - 290px);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      background:
+        radial-gradient(circle at 100% 0, rgba(90,140,255,.08), transparent 28%),
+        radial-gradient(circle at 0 100%, rgba(124,58,237,.06), transparent 28%),
+        linear-gradient(180deg,#ffffff,#fbfcff);
+    }
+
+    .mode-badge{
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#eef3ff;
+      color:#294eb2;
+      font-weight:800;
+      font-size:12px;
+    }
+
+    .prompt{
+      font-size:clamp(30px, 8vw, 42px);
+      line-height:1.04;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin:14px 0 10px;
+      word-break:break-word;
+    }
+
+    .hint{
+      font-size:17px;
+      color:var(--muted);
+      font-weight:600;
+      line-height:1.35;
+    }
+
+    .answer-line{
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:#f8fbff;
+      font-size:clamp(18px, 5vw, 25px);
+      font-weight:900;
+      line-height:1.36;
+      word-break:break-word;
+      opacity:0;
+      transform:translateY(8px) scale(.985);
+      transition:.25s ease;
+    }
+
+    .answer-line.show{
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
+
+    .btn{
+      border:none;
+      border-radius:18px;
+      min-height:56px;
+      padding:15px 16px;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      width:100%;
+    }
+
+    .btn:active{transform:scale(.985)}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .btn.primary{background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#fff}
+    .btn.secondary{background:#fff;border:1px solid var(--line);color:var(--text)}
+    .btn.ok{background:var(--green);color:#fff}
+    .btn.warn{background:var(--orange);color:#fff}
+    .btn.bad{background:var(--red);color:#fff}
+    .btn.violet{background:linear-gradient(135deg,var(--violet),#9968ff);color:#fff}
+
+    .progress-wrap{
+      height:12px;
+      border-radius:999px;
+      background:#dfe7f5;
+      overflow:hidden;
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg,var(--blue),var(--violet));
+    }
+
+    .stat{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px;
+    }
+
+    .stat .k{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      margin-bottom:8px;
+    }
+
+    .stat .v{
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .item{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px;
+    }
+
+    .item-head{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:10px;
+    }
+
+    .item-title{
+      font-size:20px;
+      font-weight:900;
+      line-height:1.1;
+    }
+
+    .inline{
+      font-size:clamp(16px, 4.3vw, 22px);
+      font-weight:900;
+      line-height:1.35;
+      word-break:break-word;
+    }
+
+    .test-q{
+      font-size:28px;
+      line-height:1.08;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin-bottom:6px;
+    }
+
+    .field{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px;
+    }
+
+    .field .label{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:800;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .field.ok{border-color:#86efac;background:#f0fdf4}
+    .field.bad{border-color:#fecaca;background:#fef2f2}
+
+    .field input{
+      border:1px solid var(--line);
+      padding:13px 14px;
+      border-radius:14px;
+      background:#fff;
+      width:100%;
+      font-size:16px;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:720px;
+    }
+
+    th,td{
+      padding:12px 10px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      position:sticky;
+      top:0;
+      background:#f8fbff;
+      z-index:1;
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .screen{display:none}
+    .screen.active{display:grid;gap:12px}
+    .hidden{display:none !important}
+
+    .tabbar{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:30;
+      padding:8px 10px calc(8px + var(--safe-bottom));
+      background:linear-gradient(180deg, rgba(242,245,251,0), rgba(242,245,251,.92) 18%, rgba(242,245,251,.98));
+      backdrop-filter:blur(16px);
+    }
+
+    .tabbar-inner{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:6px;
+      border-radius:24px;
+      padding:7px;
+      width:100%;
+    }
+
+    .tab{
+      border:none;
+      background:transparent;
+      border-radius:18px;
+      padding:10px 4px;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      line-height:1.05;
+      min-height:62px;
+      justify-content:center;
+    }
+
+    .tab .icon{font-size:18px}
+    .tab.active{background:#edf3ff;color:#244ab2}
+
+    .ios-tip{
+      margin-top:8px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+    }
+
+    .install-banner{
+      display:none;
+      margin-bottom:10px;
+      padding:12px 14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(255,255,255,.95);
+      box-shadow:var(--shadow);
+      font-size:13px;
+      line-height:1.4;
+      color:var(--text);
+    }
+
+    .install-banner.show{display:block}
+
+    @media (min-width: 740px){
+      .app{
+        max-width:560px;
+        margin:0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="installBanner" id="installBanner"></div>
+
+    <div class="top">
+      <div class="hero">
+        <div class="logo">DE</div>
+        <div>
+          <h1>Тренажер німецьких дієслів</h1>
+          <p>Infinitiv • Präteritum • Partizip II • український переклад</p>
+        </div>
+      </div>
+
+      <div class="search-row">
+        <div class="box"><input id="globalSearch" type="text" placeholder="Пошук: gehen, ging, йти..." /></div>
+      </div>
+
+      <div class="filters-row">
+        <div class="box"><select id="globalTypeFilter"><option value="all">Усі типи</option><option value="weak">Слабкі</option><option value="strong">Сильні</option><option value="irregular">Неправильні</option></select></div>
+        <div class="box"><select id="globalStrongGroupFilter"><option value="all">Усі групи сильних</option></select></div>
+      </div>
+    </div>
+
+    <div class="screens">
+      <section id="view-learn" class="screen active">
+        <div class="card stack">
+          <div class="section-title">Сесія</div>
+          <div class="box"><select id="learnMode">
+            <option value="inf_to_all">Бачу Infinitiv → згадую все</option>
+            <option value="ua_to_all">Бачу переклад → згадую все</option>
+            <option value="pret_to_inf">Бачу Präteritum → згадую Infinitiv</option>
+            <option value="part_to_inf">Бачу Partizip II → згадую Infinitiv</option>
+            <option value="all">Вчу весь рядок одразу</option>
+          </select></div>
+          <div class="filters-row">
+            <div class="box"><select id="sessionSize"><option value="5">5</option><option value="10" selected>10</option><option value="15">15</option><option value="20">20</option></select></div>
+            <div class="box"><select id="categoryFilter"><option value="all">Усі</option><option value="weak">Слабкі</option><option value="strong">Сильні</option><option value="irregular">Неправильні</option></select></div>
+          </div>
+          <div class="box"><select id="strongGroupFilter"><option value="all">Усі групи</option></select></div>
+          <div class="action-grid">
+            <button class="btn primary" id="restartSessionBtn">Нова сесія</button>
+            <button class="btn secondary" id="nextLearnBtn">Далі</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Поступ</div>
+          <div class="chips"><div class="chip" id="learnCounterChip">0 / 0</div><div class="chip" id="poolChip">Активний пул: 0</div></div>
+          <div class="helper" id="sessionMeta" style="margin:10px 0 8px">0 / 0</div>
+          <div class="progress-wrap"><div class="progress-bar" id="sessionProgressBar"></div></div>
+        </div>
+
+        <div class="card trainer">
+          <div>
+            <div class="mode-badge" id="modeBadge">Режим</div>
+            <div class="prompt" id="learnPrompt">Натисніть «Нова сесія»</div>
+            <div class="hint" id="learnHint">Тут з'явиться завдання</div>
+            <div class="answer-line" id="answerLine"></div>
+          </div>
+
+          <div>
+            <div class="action-grid">
+              <button class="btn primary" id="showAnswerBtn">Показати відповідь</button>
+              <button class="btn violet" id="laterBtn" disabled>Повторити пізніше</button>
+            </div>
+            <div class="action-grid">
+              <button class="btn ok" id="knowBtn" disabled>Знаю</button>
+              <button class="btn warn" id="hardBtn" disabled>Важко</button>
+            </div>
+            <div class="action-row">
+              <button class="btn bad" id="dontKnowBtn" disabled>Не знаю</button>
+            </div>
+            <div class="helper ios-tip" id="learnFootnote">Підготуйте нову сесію.</div>
+          </div>
+        </div>
+
+        <div class="card stack">
+          <div class="section-title">Дані</div>
+          <button class="btn secondary" id="exportBtn">Експорт JSON</button>
+          <label class="btn secondary">Імпорт JSON<input id="importInput" type="file" accept=".json,application/json" class="hidden" /></label>
+          <button class="btn bad" id="resetProgressBtn">Скинути прогрес</button>
+        </div>
+      </section>
+
+      <section id="view-test" class="screen">
+        <div class="card stack">
+          <div class="chips"><div class="chip" id="testCounterChip">0 / 0</div></div>
+          <div class="filters-row">
+            <div class="box"><select id="testMode">
+              <option value="prateritum">Вписати Präteritum</option>
+              <option value="partizip2">Вписати Partizip II</option>
+              <option value="translation_ua">Вписати український переклад</option>
+              <option value="infinitiv">Вписати Infinitiv</option>
+              <option value="full" selected>Повний тест</option>
+            </select></div>
+            <div class="box"><select id="testCount"><option value="5">5</option><option value="10" selected>10</option><option value="15">15</option><option value="20">20</option></select></div>
+          </div>
+          <button class="btn primary" id="startTestBtn">Почати тест</button>
+          <div id="testArea"><div class="helper">Оберіть тип тесту та натисніть «Почати тест».</div></div>
+        </div>
+      </section>
+
+      <section id="view-errors" class="screen">
+        <div class="card stack">
+          <div class="chips"><div class="chip" id="errorsCountChip">Помилок: 0</div></div>
+          <div class="action-grid">
+            <button class="btn primary" id="practiceErrorsBtn">Вчити лише помилки</button>
+            <button class="btn secondary" id="clearErrorsBtn">Очистити помилки</button>
+          </div>
+          <div class="list" id="errorsList"></div>
+        </div>
+      </section>
+
+      <section id="view-stats" class="screen">
+        <div class="stats-grid">
+          <div class="stat"><div class="k">Вивчено</div><div class="v" id="statLearned">0</div></div>
+          <div class="stat"><div class="k">Правильно</div><div class="v" id="statCorrect">0</div></div>
+          <div class="stat"><div class="k">Помилок</div><div class="v" id="statWrong">0</div></div>
+          <div class="stat"><div class="k">Успіх</div><div class="v" id="statRate">0%</div></div>
+          <div class="stat"><div class="k">Повторення</div><div class="v" id="statActiveReview">0</div></div>
+          <div class="stat"><div class="k">Закріплені</div><div class="v" id="statMastered">0</div></div>
+          <div class="stat"><div class="k">Сесія</div><div class="v" id="statSession">0</div></div>
+          <div class="stat"><div class="k">Усього</div><div class="v" id="statTotal">0</div></div>
+        </div>
+        <div class="card">
+          <div class="section-title">Найпроблемніші дієслова</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Рядок</th><th>Тип</th><th>Група</th><th>Помилки</th><th>Рівень</th></tr></thead>
+              <tbody id="problemTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-settings" class="screen">
+        <div class="card stack">
+          <div class="section-title">Налаштування</div>
+          <div class="box"><select id="settingsLearnMode"></select></div>
+          <div class="filters-row">
+            <div class="box"><select id="settingsCategory"></select></div>
+            <div class="box"><select id="settingsSessionSize"></select></div>
+          </div>
+          <div class="box"><select id="settingsStrongGroup"></select></div>
+          <button class="btn primary" id="saveSettingsBtn">Зберегти налаштування</button>
+        </div>
+      </section>
+
+      <section id="view-list" class="screen">
+        <div class="card stack">
+          <div class="chips"><div class="chip" id="listCountChip">0</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Рядок</th><th>Тип</th><th>Група сильних</th></tr></thead>
+              <tbody id="verbTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <nav class="tabbar">
+    <div class="tabbar-inner">
+      <button class="tab active" data-tab="learn"><span class="icon">🧠</span><span>Вчити</span></button>
+      <button class="tab" data-tab="test"><span class="icon">✍️</span><span>Тест</span></button>
+      <button class="tab" data-tab="errors"><span class="icon">⚠️</span><span>Помилки</span></button>
+      <button class="tab" data-tab="stats"><span class="icon">📊</span><span>Стат.</span></button>
+      <button class="tab" data-tab="settings"><span class="icon">⚙️</span><span>Налашт.</span></button>
+      <button class="tab" data-tab="list"><span class="icon">📚</span><span>Список</span></button>
+    </div>
+  </nav>
+
+  <script>
+    const VERBS = [
+      { infinitiv:'sein', prateritum:'war', partizip2:'gewesen', translation_ua:'бути', type:'irregular' },
+      { infinitiv:'haben', prateritum:'hatte', partizip2:'gehabt', translation_ua:'мати', type:'irregular' },
+      { infinitiv:'werden', prateritum:'wurde', partizip2:'geworden', translation_ua:'ставати', type:'irregular' },
+      { infinitiv:'gehen', prateritum:'ging', partizip2:'gegangen', translation_ua:'йти', type:'strong' },
+      { infinitiv:'kommen', prateritum:'kam', partizip2:'gekommen', translation_ua:'приходити', type:'strong' },
+      { infinitiv:'geben', prateritum:'gab', partizip2:'gegeben', translation_ua:'давати', type:'strong' },
+      { infinitiv:'nehmen', prateritum:'nahm', partizip2:'genommen', translation_ua:'брати', type:'strong' },
+      { infinitiv:'sehen', prateritum:'sah', partizip2:'gesehen', translation_ua:'бачити', type:'strong' },
+      { infinitiv:'finden', prateritum:'fand', partizip2:'gefunden', translation_ua:'знаходити', type:'strong' },
+      { infinitiv:'bleiben', prateritum:'blieb', partizip2:'geblieben', translation_ua:'залишатися', type:'strong' },
+      { infinitiv:'liegen', prateritum:'lag', partizip2:'gelegen', translation_ua:'лежати', type:'strong' },
+      { infinitiv:'stehen', prateritum:'stand', partizip2:'gestanden', translation_ua:'стояти', type:'strong' },
+      { infinitiv:'sitzen', prateritum:'saß', partizip2:'gesessen', translation_ua:'сидіти', type:'strong' },
+      { infinitiv:'laufen', prateritum:'lief', partizip2:'gelaufen', translation_ua:'бігти', type:'strong' },
+      { infinitiv:'fahren', prateritum:'fuhr', partizip2:'gefahren', translation_ua:'їхати', type:'strong' },
+      { infinitiv:'tragen', prateritum:'trug', partizip2:'getragen', translation_ua:'носити', type:'strong' },
+      { infinitiv:'lesen', prateritum:'las', partizip2:'gelesen', translation_ua:'читати', type:'strong' },
+      { infinitiv:'schreiben', prateritum:'schrieb', partizip2:'geschrieben', translation_ua:'писати', type:'strong' },
+      { infinitiv:'sprechen', prateritum:'sprach', partizip2:'gesprochen', translation_ua:'говорити', type:'strong' },
+      { infinitiv:'essen', prateritum:'aß', partizip2:'gegessen', translation_ua:'їсти', type:'strong' },
+      { infinitiv:'trinken', prateritum:'trank', partizip2:'getrunken', translation_ua:'пити', type:'strong' },
+      { infinitiv:'schlafen', prateritum:'schlief', partizip2:'geschlafen', translation_ua:'спати', type:'strong' },
+      { infinitiv:'helfen', prateritum:'half', partizip2:'geholfen', translation_ua:'допомагати', type:'strong' },
+      { infinitiv:'rufen', prateritum:'rief', partizip2:'gerufen', translation_ua:'кликати', type:'strong' },
+      { infinitiv:'werfen', prateritum:'warf', partizip2:'geworfen', translation_ua:'кидати', type:'strong' },
+      { infinitiv:'treffen', prateritum:'traf', partizip2:'getroffen', translation_ua:'зустрічати', type:'strong' },
+      { infinitiv:'beginnen', prateritum:'begann', partizip2:'begonnen', translation_ua:'починати', type:'strong' },
+      { infinitiv:'gewinnen', prateritum:'gewann', partizip2:'gewonnen', translation_ua:'вигравати', type:'strong' },
+      { infinitiv:'verlieren', prateritum:'verlor', partizip2:'verloren', translation_ua:'втрачати', type:'strong' },
+      { infinitiv:'singen', prateritum:'sang', partizip2:'gesungen', translation_ua:'співати', type:'strong' },
+      { infinitiv:'springen', prateritum:'sprang', partizip2:'gesprungen', translation_ua:'стрибати', type:'strong' },
+      { infinitiv:'schwimmen', prateritum:'schwamm', partizip2:'geschwommen', translation_ua:'плавати', type:'strong' },
+      { infinitiv:'schneiden', prateritum:'schnitt', partizip2:'geschnitten', translation_ua:'різати', type:'strong' },
+      { infinitiv:'schließen', prateritum:'schloss', partizip2:'geschlossen', translation_ua:'закривати', type:'strong' },
+      { infinitiv:'schießen', prateritum:'schoss', partizip2:'geschossen', translation_ua:'стріляти', type:'strong' },
+      { infinitiv:'ziehen', prateritum:'zog', partizip2:'gezogen', translation_ua:'тягнути', type:'strong' },
+      { infinitiv:'fliegen', prateritum:'flog', partizip2:'geflogen', translation_ua:'летіти', type:'strong' },
+      { infinitiv:'wachsen', prateritum:'wuchs', partizip2:'gewachsen', translation_ua:'рости', type:'strong' },
+      { infinitiv:'waschen', prateritum:'wusch', partizip2:'gewaschen', translation_ua:'мити', type:'strong' },
+      { infinitiv:'fallen', prateritum:'fiel', partizip2:'gefallen', translation_ua:'падати', type:'strong' },
+      { infinitiv:'halten', prateritum:'hielt', partizip2:'gehalten', translation_ua:'тримати', type:'strong' },
+      { infinitiv:'lassen', prateritum:'ließ', partizip2:'gelassen', translation_ua:'залишати / дозволяти', type:'strong' },
+      { infinitiv:'vergessen', prateritum:'vergaß', partizip2:'vergessen', translation_ua:'забувати', type:'strong' },
+      { infinitiv:'backen', prateritum:'buk', partizip2:'gebacken', translation_ua:'пекти', type:'strong' },
+      { infinitiv:'bitten', prateritum:'bat', partizip2:'gebeten', translation_ua:'просити', type:'strong' },
+      { infinitiv:'bieten', prateritum:'bot', partizip2:'geboten', translation_ua:'пропонувати', type:'strong' },
+      { infinitiv:'binden', prateritum:'band', partizip2:'gebunden', translation_ua:'зв’язувати', type:'strong' },
+      { infinitiv:'empfehlen', prateritum:'empfahl', partizip2:'empfohlen', translation_ua:'рекомендувати', type:'strong' },
+      { infinitiv:'erschrecken', prateritum:'erschrak', partizip2:'erschrocken', translation_ua:'лякатися', type:'strong' },
+      { infinitiv:'frieren', prateritum:'fror', partizip2:'gefroren', translation_ua:'мерзнути', type:'strong' },
+      { infinitiv:'genießen', prateritum:'genoss', partizip2:'genossen', translation_ua:'насолоджуватися', type:'strong' },
+      { infinitiv:'greifen', prateritum:'griff', partizip2:'gegriffen', translation_ua:'хапати', type:'strong' },
+      { infinitiv:'heben', prateritum:'hob', partizip2:'gehoben', translation_ua:'піднімати', type:'strong' },
+      { infinitiv:'laden', prateritum:'lud', partizip2:'geladen', translation_ua:'завантажувати / запрошувати', type:'strong' },
+      { infinitiv:'leihen', prateritum:'lieh', partizip2:'geliehen', translation_ua:'позичати', type:'strong' },
+      { infinitiv:'reiten', prateritum:'ritt', partizip2:'geritten', translation_ua:'їхати верхи', type:'strong' },
+      { infinitiv:'riechen', prateritum:'roch', partizip2:'gerochen', translation_ua:'нюхати', type:'strong' },
+      { infinitiv:'scheinen', prateritum:'schien', partizip2:'geschienen', translation_ua:'світити', type:'strong' },
+      { infinitiv:'schieben', prateritum:'schob', partizip2:'geschoben', translation_ua:'штовхати', type:'strong' },
+      { infinitiv:'streiten', prateritum:'stritt', partizip2:'gestritten', translation_ua:'сперечатися', type:'strong' },
+      { infinitiv:'treiben', prateritum:'trieb', partizip2:'getrieben', translation_ua:'гнати / займатися', type:'strong' },
+      { infinitiv:'denken', prateritum:'dachte', partizip2:'gedacht', translation_ua:'думати', type:'irregular' },
+      { infinitiv:'bringen', prateritum:'brachte', partizip2:'gebracht', translation_ua:'приносити', type:'irregular' },
+      { infinitiv:'kennen', prateritum:'kannte', partizip2:'gekannt', translation_ua:'знати / бути знайомим', type:'irregular' },
+      { infinitiv:'nennen', prateritum:'nannte', partizip2:'genannt', translation_ua:'називати', type:'irregular' },
+      { infinitiv:'rennen', prateritum:'rannte', partizip2:'gerannt', translation_ua:'мчати', type:'irregular' },
+      { infinitiv:'brennen', prateritum:'brannte', partizip2:'gebrannt', translation_ua:'горіти', type:'irregular' },
+      { infinitiv:'senden', prateritum:'sandte', partizip2:'gesandt', translation_ua:'надсилати', type:'irregular' },
+      { infinitiv:'wenden', prateritum:'wandte', partizip2:'gewandt', translation_ua:'повертати', type:'irregular' },
+      { infinitiv:'tun', prateritum:'tat', partizip2:'getan', translation_ua:'робити', type:'irregular' },
+      { infinitiv:'wissen', prateritum:'wusste', partizip2:'gewusst', translation_ua:'знати', type:'irregular' },
+      { infinitiv:'machen', prateritum:'machte', partizip2:'gemacht', translation_ua:'робити', type:'weak' },
+      { infinitiv:'sagen', prateritum:'sagte', partizip2:'gesagt', translation_ua:'казати', type:'weak' },
+      { infinitiv:'kaufen', prateritum:'kaufte', partizip2:'gekauft', translation_ua:'купувати', type:'weak' },
+      { infinitiv:'verkaufen', prateritum:'verkaufte', partizip2:'verkauft', translation_ua:'продавати', type:'weak' },
+      { infinitiv:'arbeiten', prateritum:'arbeitete', partizip2:'gearbeitet', translation_ua:'працювати', type:'weak' },
+      { infinitiv:'lernen', prateritum:'lernte', partizip2:'gelernt', translation_ua:'вчити', type:'weak' },
+      { infinitiv:'wohnen', prateritum:'wohnte', partizip2:'gewohnt', translation_ua:'мешкати', type:'weak' },
+      { infinitiv:'leben', prateritum:'lebte', partizip2:'gelebt', translation_ua:'жити', type:'weak' },
+      { infinitiv:'lieben', prateritum:'liebte', partizip2:'geliebt', translation_ua:'любити', type:'weak' },
+      { infinitiv:'fragen', prateritum:'fragte', partizip2:'gefragt', translation_ua:'питати', type:'weak' },
+      { infinitiv:'antworten', prateritum:'antwortete', partizip2:'geantwortet', translation_ua:'відповідати', type:'weak' },
+      { infinitiv:'hören', prateritum:'hörte', partizip2:'gehört', translation_ua:'чути', type:'weak' },
+      { infinitiv:'zeigen', prateritum:'zeigte', partizip2:'gezeigt', translation_ua:'показувати', type:'weak' },
+      { infinitiv:'brauchen', prateritum:'brauchte', partizip2:'gebraucht', translation_ua:'потребувати', type:'weak' },
+      { infinitiv:'spielen', prateritum:'spielte', partizip2:'gespielt', translation_ua:'грати', type:'weak' },
+      { infinitiv:'öffnen', prateritum:'öffnete', partizip2:'geöffnet', translation_ua:'відкривати', type:'weak' },
+      { infinitiv:'kochen', prateritum:'kochte', partizip2:'gekocht', translation_ua:'готувати', type:'weak' },
+      { infinitiv:'putzen', prateritum:'putzte', partizip2:'geputzt', translation_ua:'чистити', type:'weak' },
+      { infinitiv:'tanzen', prateritum:'tanzte', partizip2:'getanzt', translation_ua:'танцювати', type:'weak' },
+      { infinitiv:'lachen', prateritum:'lachte', partizip2:'gelacht', translation_ua:'сміятися', type:'weak' },
+      { infinitiv:'weinen', prateritum:'weinte', partizip2:'geweint', translation_ua:'плакати', type:'weak' },
+      { infinitiv:'reisen', prateritum:'reiste', partizip2:'gereist', translation_ua:'подорожувати', type:'weak' },
+      { infinitiv:'wandern', prateritum:'wanderte', partizip2:'gewandert', translation_ua:'мандрувати пішки', type:'weak' },
+      { infinitiv:'bestellen', prateritum:'bestellte', partizip2:'bestellt', translation_ua:'замовляти', type:'weak' },
+      { infinitiv:'bezahlen', prateritum:'bezahlte', partizip2:'bezahlt', translation_ua:'платити', type:'weak' },
+      { infinitiv:'erklären', prateritum:'erklärte', partizip2:'erklärt', translation_ua:'пояснювати', type:'weak' },
+      { infinitiv:'glauben', prateritum:'glaubte', partizip2:'geglaubt', translation_ua:'вірити', type:'weak' },
+      { infinitiv:'hoffen', prateritum:'hoffte', partizip2:'gehofft', translation_ua:'сподіватися', type:'weak' },
+      { infinitiv:'suchen', prateritum:'suchte', partizip2:'gesucht', translation_ua:'шукати', type:'weak' },
+      { infinitiv:'warten', prateritum:'wartete', partizip2:'gewartet', translation_ua:'чекати', type:'weak' },
+      { infinitiv:'besuchen', prateritum:'besuchte', partizip2:'besucht', translation_ua:'відвідувати', type:'weak' },
+      { infinitiv:'feiern', prateritum:'feierte', partizip2:'gefeiert', translation_ua:'святкувати', type:'weak' },
+      { infinitiv:'ändern', prateritum:'änderte', partizip2:'geändert', translation_ua:'змінювати', type:'weak' },
+      { infinitiv:'versuchen', prateritum:'versuchte', partizip2:'versucht', translation_ua:'намагатися', type:'weak' },
+      { infinitiv:'erzählen', prateritum:'erzählte', partizip2:'erzählt', translation_ua:'розповідати', type:'weak' },
+      { infinitiv:'planen', prateritum:'plante', partizip2:'geplant', translation_ua:'планувати', type:'weak' },
+      { infinitiv:'mieten', prateritum:'mietete', partizip2:'gemietet', translation_ua:'орендувати', type:'weak' }
+    ];
+
+    const STRONG_GROUPS = {
+      g1:{ label:'1 · ei–ie–ie', desc:'schreiben → schrieb → geschrieben' },
+      g2:{ label:'2 · ie–o–o', desc:'fliegen → flog → geflogen' },
+      g3:{ label:'3 · i–a–u', desc:'singen → sang → gesungen' },
+      g4:{ label:'4 · e–a–o', desc:'sprechen → sprach → gesprochen' },
+      g5:{ label:'5 · e–a–e', desc:'geben → gab → gegeben' },
+      g6:{ label:'6 · a–u–a', desc:'fahren → fuhr → gefahren' },
+      g7:{ label:'7 · a–ie–a', desc:'fallen → fiel → gefallen' }
+    };
+
+    function detectStrongGroup(v){
+      if(v.type!=='strong') return '';
+      const i=v.infinitiv, p=v.prateritum, pp=v.partizip2;
+      if(/ei/.test(i) && /ie/.test(p) && /ie/.test(pp)) return 'g1';
+      if((/ie|i/.test(i)) && /o/.test(p) && /o/.test(pp)) return 'g2';
+      if((/i/.test(i) || /in/.test(i)) && /a/.test(p) && /u/.test(pp)) return 'g3';
+      if(/e/.test(i) && /a/.test(p) && /o/.test(pp)) return 'g4';
+      if(/e/.test(i) && /a/.test(p) && /e/.test(pp)) return 'g5';
+      if(/a/.test(i) && /u/.test(p) && /a/.test(pp)) return 'g6';
+      if(/a/.test(i) && /ie/.test(p) && /a/.test(pp)) return 'g7';
+      return 'g4';
+    }
+
+    VERBS.forEach(v => { v.strongGroup = detectStrongGroup(v); });
+
+    const STORAGE_KEY = 'de_verbs_ios_ua_v4_iphone';
+    const defaultSettings = {
+      learnMode:'inf_to_all', sessionSize:10, categoryFilter:'all', strongGroupFilter:'all',
+      globalSearch:'', globalTypeFilter:'all', globalStrongGroupFilter:'all'
+    };
+
+    const makeDefaultState = () => ({
+      settings:{...defaultSettings},
+      stats:{correct:0,wrong:0,sessionDone:0},
+      perVerb:Object.fromEntries(VERBS.map(v => [v.infinitiv,{ease:1,interval:0,nextDue:0,lastSeen:0,errors:0,success:0,hard:0,dontKnow:0,later:0,shown:0}])),
+      errors:[],
+      session:{queue:[],index:0,answerShown:false,mode:defaultSettings.learnMode,source:'normal'}
+    });
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return makeDefaultState();
+        const parsed = JSON.parse(raw);
+        const base = makeDefaultState();
+        return {
+          ...base,
+          ...parsed,
+          settings:{...base.settings,...(parsed.settings||{})},
+          stats:{...base.stats,...(parsed.stats||{})},
+          perVerb:{...base.perVerb,...(parsed.perVerb||{})},
+          session:{...base.session,...(parsed.session||{})},
+          errors:Array.isArray(parsed.errors)?parsed.errors:[]
+        };
+      }catch{return makeDefaultState();}
+    }
+
+    let state = loadState();
+    let testState = { queue:[], index:0, mode:'full', finished:false, result:{correct:0,total:0} };
+
+    const $ = id => document.getElementById(id);
+    const els = {
+      tabs:[...document.querySelectorAll('.tab')],
+      views:{learn:$('view-learn'),test:$('view-test'),errors:$('view-errors'),stats:$('view-stats'),settings:$('view-settings'),list:$('view-list')},
+      installBanner:$('installBanner'),
+      globalSearch:$('globalSearch'), globalTypeFilter:$('globalTypeFilter'), globalStrongGroupFilter:$('globalStrongGroupFilter'),
+      learnMode:$('learnMode'), sessionSize:$('sessionSize'), categoryFilter:$('categoryFilter'), strongGroupFilter:$('strongGroupFilter'),
+      restartSessionBtn:$('restartSessionBtn'), nextLearnBtn:$('nextLearnBtn'), exportBtn:$('exportBtn'), importInput:$('importInput'), resetProgressBtn:$('resetProgressBtn'),
+      sessionMeta:$('sessionMeta'), sessionProgressBar:$('sessionProgressBar'), modeBadge:$('modeBadge'), learnPrompt:$('learnPrompt'), learnHint:$('learnHint'), answerLine:$('answerLine'), learnFootnote:$('learnFootnote'), learnCounterChip:$('learnCounterChip'), poolChip:$('poolChip'),
+      showAnswerBtn:$('showAnswerBtn'), knowBtn:$('knowBtn'), hardBtn:$('hardBtn'), dontKnowBtn:$('dontKnowBtn'), laterBtn:$('laterBtn'),
+      testMode:$('testMode'), testCount:$('testCount'), startTestBtn:$('startTestBtn'), testArea:$('testArea'), testCounterChip:$('testCounterChip'),
+      errorsCountChip:$('errorsCountChip'), errorsList:$('errorsList'), practiceErrorsBtn:$('practiceErrorsBtn'), clearErrorsBtn:$('clearErrorsBtn'),
+      statLearned:$('statLearned'), statCorrect:$('statCorrect'), statWrong:$('statWrong'), statRate:$('statRate'), statActiveReview:$('statActiveReview'), statMastered:$('statMastered'), statSession:$('statSession'), statTotal:$('statTotal'), problemTableBody:$('problemTableBody'),
+      settingsLearnMode:$('settingsLearnMode'), settingsCategory:$('settingsCategory'), settingsSessionSize:$('settingsSessionSize'), settingsStrongGroup:$('settingsStrongGroup'), saveSettingsBtn:$('saveSettingsBtn'),
+      verbTableBody:$('verbTableBody'), listCountChip:$('listCountChip')
+    };
+
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function norm(s){ return (s||'').toString().trim().toLowerCase().replace(/\s+/g,' '); }
+    function esc(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
+    function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+    function typeLabel(t){ return t==='weak'?'Слабкий':t==='strong'?'Сильний':'Неправильний'; }
+    function typeClass(t){ return t==='weak'?'weak':t==='strong'?'strong':'irregular'; }
+    function groupLabel(id){ return id && STRONG_GROUPS[id] ? STRONG_GROUPS[id].label : '—'; }
+    function lineString(v){ return `${v.infinitiv} — ${v.prateritum} — ${v.partizip2} — ${v.translation_ua}`; }
+    function getVerbProgress(v){ return state.perVerb[v.infinitiv] || (state.perVerb[v.infinitiv]={ease:1,interval:0,nextDue:0,lastSeen:0,errors:0,success:0,hard:0,dontKnow:0,later:0,shown:0}); }
+
+    function showInstallHint(){
+      const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+      if(standalone) return;
+      els.installBanner.className = 'install-banner show';
+      els.installBanner.innerHTML = 'Для зручного запуску на iPhone: відкрийте файл у Safari → Поділитися → На початковий екран.';
+    }
+
+    function populateGroupSelects(){
+      const options = `<option value="all">Усі групи</option>` + Object.entries(STRONG_GROUPS).map(([id,g]) => `<option value="${id}">${g.label}</option>`).join('');
+      els.strongGroupFilter.innerHTML = options;
+      els.globalStrongGroupFilter.innerHTML = `<option value="all">Усі групи сильних</option>` + Object.entries(STRONG_GROUPS).map(([id,g]) => `<option value="${id}">${g.label}</option>`).join('');
+      els.settingsStrongGroup.innerHTML = options;
+    }
+
+    function getFilteredVerbs(){
+      const q = norm(state.settings.globalSearch);
+      const type = state.settings.globalTypeFilter;
+      const globalGroup = state.settings.globalStrongGroupFilter;
+      return VERBS.filter(v => {
+        const okType = type === 'all' ? true : v.type === type;
+        const okGroup = globalGroup === 'all' ? true : v.strongGroup === globalGroup;
+        const okSearch = !q ? true : [v.infinitiv,v.prateritum,v.partizip2,v.translation_ua,v.type,groupLabel(v.strongGroup)].some(x => norm(x).includes(q));
+        return okType && okGroup && okSearch;
+      });
+    }
+
+    function getCategoryVerbs(base = VERBS){
+      return base.filter(v => {
+        const okCat = state.settings.categoryFilter === 'all' ? true : v.type === state.settings.categoryFilter;
+        const okStrongGroup = state.settings.strongGroupFilter === 'all' ? true : v.strongGroup === state.settings.strongGroupFilter;
+        return okCat && okStrongGroup;
+      });
+    }
+
+    function scoreVerb(v, now=Date.now()){
+      const p = getVerbProgress(v);
+      let s = 0;
+      if(p.nextDue <= now) s += 100;
+      if(p.shown === 0) s += 30;
+      s += p.errors*8 + p.hard*5 + p.dontKnow*7;
+      s -= p.success*2 + Math.min(p.interval,30);
+      return s;
+    }
+
+    function buildSessionQueue(source='normal'){
+      const now = Date.now();
+      let pool = getCategoryVerbs(getFilteredVerbs());
+      if(source==='errors'){
+        const set = new Set(state.errors);
+        pool = pool.filter(v => set.has(v.infinitiv));
+      }
+      const due = pool.filter(v => getVerbProgress(v).nextDue <= now).sort((a,b)=>scoreVerb(b,now)-scoreVerb(a,now));
+      const unseen = pool.filter(v => getVerbProgress(v).shown===0).sort((a,b)=>scoreVerb(b,now)-scoreVerb(a,now));
+      const rest = pool.filter(v => !due.includes(v) && !unseen.includes(v)).sort((a,b)=>scoreVerb(b,now)-scoreVerb(a,now));
+      const selected = [];
+      const need = Number(state.settings.sessionSize);
+      for(const list of [due, unseen, rest]){
+        for(const v of list){
+          if(selected.length >= need) break;
+          if(!selected.some(x => x.infinitiv === v.infinitiv)) selected.push(v);
+        }
+      }
+      state.session.queue = shuffle(selected.map(v => v.infinitiv));
+      state.session.index = 0;
+      state.session.answerShown = false;
+      state.session.mode = state.settings.learnMode;
+      state.session.source = source;
+      state.stats.sessionDone = 0;
+      saveState();
+    }
+
+    function currentVerb(){
+      const id = state.session.queue[state.session.index];
+      return VERBS.find(v => v.infinitiv === id) || null;
+    }
+
+    function learnModeLabel(mode){
+      return {
+        inf_to_all:'Бачу Infinitiv → згадую все',
+        ua_to_all:'Бачу переклад → згадую все',
+        pret_to_inf:'Бачу Präteritum → згадую Infinitiv',
+        part_to_inf:'Бачу Partizip II → згадую Infinitiv',
+        all:'Вчу весь рядок одразу'
+      }[mode] || mode;
+    }
+
+    function promptFor(v){
+      const mode = state.settings.learnMode;
+      if(!v) return {title:'Натисніть «Нова сесія»', hint:'Тут з\'явиться завдання'};
+      if(mode==='inf_to_all') return { title:v.infinitiv, hint:'Згадайте Präteritum, Partizip II та український переклад' };
+      if(mode==='ua_to_all') return { title:v.translation_ua, hint:'Згадайте всі німецькі форми' };
+      if(mode==='pret_to_inf') return { title:v.prateritum, hint:'Згадайте Infinitiv' };
+      if(mode==='part_to_inf') return { title:v.partizip2, hint:'Згадайте Infinitiv' };
+      return { title:lineString(v), hint:'Запам’ятовуйте весь рядок як одну модель' };
+    }
+
+    function toggleLearnButtons(shown){
+      els.knowBtn.disabled = !shown;
+      els.hardBtn.disabled = !shown;
+      els.dontKnowBtn.disabled = !shown;
+      els.laterBtn.disabled = !shown;
+      els.showAnswerBtn.disabled = shown;
+    }
+
+    function renderLearn(){
+      const v = currentVerb();
+      const total = state.session.queue.length;
+      const idx = total ? Math.min(state.session.index + 1, total) : 0;
+      els.modeBadge.textContent = learnModeLabel(state.settings.learnMode);
+      els.learnCounterChip.textContent = `${idx} / ${total}`;
+      els.poolChip.textContent = `Активний пул: ${getCategoryVerbs(getFilteredVerbs()).length}`;
+      els.sessionMeta.textContent = `${idx} / ${total}`;
+      els.sessionProgressBar.style.width = total ? `${((idx - 1) / total) * 100}%` : '0%';
+      if(!v){
+        els.learnPrompt.textContent = 'Натисніть «Нова сесія»';
+        els.learnHint.textContent = 'Тут з\'явиться завдання';
+        els.answerLine.textContent = '';
+        els.answerLine.classList.remove('show');
+        els.learnFootnote.textContent = 'Сесію ще не підготовлено.';
+        toggleLearnButtons(false);
+        return;
+      }
+      const p = promptFor(v);
+      els.learnPrompt.textContent = p.title;
+      els.learnHint.textContent = p.hint;
+      els.answerLine.textContent = lineString(v);
+      els.answerLine.classList.toggle('show', !!state.session.answerShown);
+      const group = v.strongGroup ? ` • ${groupLabel(v.strongGroup)}` : '';
+      els.learnFootnote.textContent = `${typeLabel(v.type)}${group} • Рівень: ${getVerbProgress(v).ease}`;
+      toggleLearnButtons(!!state.session.answerShown);
+    }
+
+    function addError(id){ if(!state.errors.includes(id)) state.errors.push(id); }
+    function removeError(id){ state.errors = state.errors.filter(x => x !== id); }
+
+    function updateInterval(v,outcome){
+      const p = getVerbProgress(v);
+      const now = Date.now();
+      p.lastSeen = now;
+      p.shown += 1;
+      if(outcome==='know'){
+        p.success += 1;
+        p.ease = Math.min(8,p.ease+1);
+        p.interval = p.interval===0 ? 1 : Math.min(30,p.interval*2);
+        p.nextDue = now + p.interval * 60 * 60 * 1000;
+        removeError(v.infinitiv);
+        state.stats.correct += 1;
+      }else if(outcome==='hard'){
+        p.hard += 1; p.errors += 1; p.ease = Math.max(1,p.ease-1); p.interval = .2; p.nextDue = now + 15 * 60 * 1000;
+        addError(v.infinitiv); state.stats.wrong += 1;
+      }else if(outcome==='dontKnow'){
+        p.dontKnow += 1; p.errors += 1; p.ease = 1; p.interval = .05; p.nextDue = now + 5 * 60 * 1000;
+        addError(v.infinitiv); state.stats.wrong += 1;
+      }else if(outcome==='later'){
+        p.later += 1; p.nextDue = now + 10 * 60 * 1000;
+      }
+    }
+
+    function advanceLearn(outcome){
+      const v = currentVerb();
+      if(!v) return;
+      updateInterval(v,outcome);
+      if(['hard','dontKnow','later'].includes(outcome)) state.session.queue.push(v.infinitiv);
+      state.stats.sessionDone += 1;
+      state.session.index += 1;
+      state.session.answerShown = false;
+      if(state.session.index >= state.session.queue.length) state.session.index = state.session.queue.length;
+      saveState();
+      renderAll();
+    }
+
+    function renderTest(){
+      els.testCounterChip.textContent = `${Math.min(testState.index + (testState.finished ? 0 : 1), testState.queue.length)} / ${testState.queue.length || 0}`;
+      if(!testState.queue.length){ els.testArea.innerHTML = `<div class="helper">Оберіть тип тесту та натисніть «Почати тест».</div>`; return; }
+      if(testState.finished){
+        const rate = testState.result.total ? Math.round((testState.result.correct / testState.result.total) * 100) : 0;
+        els.testArea.innerHTML = `<div class="item"><h3 style="margin-top:0">Тест завершено</h3><p><strong>Результат:</strong> ${testState.result.correct} / ${testState.result.total} (${rate}%)</p><button class="btn primary" id="restartTestInline">Пройти ще раз</button></div>`;
+        $('restartTestInline').onclick = startTest;
+        return;
+      }
+      const v = testState.queue[testState.index];
+      const mode = testState.mode;
+      els.testArea.innerHTML = `
+        <div class="test-q">${esc(questionText(v,mode))}</div>
+        <div class="helper">Введіть відповідь і перевірте себе.</div>
+        <div class="test-grid" id="testFields"></div>
+        <div class="action-grid"><button class="btn primary" id="checkTestBtn">Перевірити</button><button class="btn secondary" id="skipTestBtn">Пропустити</button></div>
+        <div id="testFeedback"></div>
+      `;
+      renderTestFields(mode);
+      $('checkTestBtn').onclick = checkTestAnswer;
+      $('skipTestBtn').onclick = () => failCurrentTest();
+    }
+
+    function questionText(v,mode){
+      if(mode==='prateritum') return `Infinitiv: ${v.infinitiv} • Українською: ${v.translation_ua}`;
+      if(mode==='partizip2') return `Infinitiv: ${v.infinitiv} • Präteritum: ${v.prateritum}`;
+      if(mode==='translation_ua') return `Infinitiv: ${v.infinitiv} • Partizip II: ${v.partizip2}`;
+      if(mode==='infinitiv') return `Präteritum: ${v.prateritum} • Українською: ${v.translation_ua}`;
+      return `Заповніть усі форми для: ${v.translation_ua}`;
+    }
+
+    function renderTestFields(mode){
+      const fields = $('testFields');
+      let defs = [];
+      if(mode==='prateritum') defs = [['prateritum','Präteritum']];
+      else if(mode==='partizip2') defs = [['partizip2','Partizip II']];
+      else if(mode==='translation_ua') defs = [['translation_ua','Український переклад']];
+      else if(mode==='infinitiv') defs = [['infinitiv','Infinitiv']];
+      else defs = [['infinitiv','Infinitiv'],['prateritum','Präteritum'],['partizip2','Partizip II'],['translation_ua','Український переклад']];
+      fields.innerHTML = defs.map(([key,label]) => `<div class="field" data-key="${key}"><div class="label">${label}</div><input type="text" data-answer-key="${key}" autocomplete="off" autocapitalize="off" spellcheck="false" /></div>`).join('');
+      const first = fields.querySelector('input');
+      if(first) setTimeout(() => first.focus(), 60);
+    }
+
+    function startTest(){
+      const count = Number(els.testCount.value);
+      const pool = shuffle(getCategoryVerbs(getFilteredVerbs()));
+      testState = { queue: pool.slice(0,count), index:0, mode: els.testMode.value, finished:false, result:{correct:0,total:Math.min(count,pool.length)} };
+      renderTest();
+    }
+
+    function checkTestAnswer(){
+      const v = testState.queue[testState.index];
+      const inputs = [...document.querySelectorAll('[data-answer-key]')];
+      let correct = true;
+      inputs.forEach(inp => {
+        const key = inp.dataset.answerKey;
+        const field = inp.closest('.field');
+        const expected = norm(v[key]);
+        const actual = norm(inp.value);
+        if(actual === expected){ field.classList.add('ok'); field.classList.remove('bad'); }
+        else { field.classList.add('bad'); field.classList.remove('ok'); correct = false; }
+      });
+      const fb = $('testFeedback');
+      if(correct){
+        testState.result.correct += 1;
+        updateInterval(v,'know');
+        fb.innerHTML = `<div class="item" style="border-color:#86efac;background:#f0fdf4"><strong>Правильно.</strong></div>`;
+      }else{
+        updateInterval(v,'dontKnow');
+        fb.innerHTML = `<div class="item" style="border-color:#fecaca;background:#fef2f2"><strong>Є помилки.</strong><div style="margin-top:8px" class="inline">${esc(lineString(v))}</div></div>`;
+      }
+      saveState();
+      $('checkTestBtn').disabled = true;
+      $('checkTestBtn').textContent = 'Перевірено';
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'btn primary';
+      nextBtn.textContent = 'Наступне питання';
+      nextBtn.onclick = nextTestQuestion;
+      const wrap = document.createElement('div'); wrap.style.marginTop='10px'; wrap.appendChild(nextBtn); fb.appendChild(wrap);
+    }
+
+    function failCurrentTest(){
+      const v = testState.queue[testState.index];
+      updateInterval(v,'dontKnow');
+      saveState();
+      nextTestQuestion();
+    }
+
+    function nextTestQuestion(){
+      testState.index += 1;
+      if(testState.index >= testState.queue.length) testState.finished = true;
+      renderAll();
+    }
+
+    function renderErrors(){
+      const items = state.errors.map(id => VERBS.find(v => v.infinitiv===id)).filter(Boolean).sort((a,b)=>getVerbProgress(b).errors-getVerbProgress(a).errors);
+      els.errorsCountChip.textContent = `Помилок: ${items.length}`;
+      if(!items.length){ els.errorsList.innerHTML = `<div class="helper">Поки що помилок немає.</div>`; return; }
+      els.errorsList.innerHTML = items.map(v => {
+        const p = getVerbProgress(v);
+        return `<div class="item"><div class="item-head"><div class="item-title">${esc(v.infinitiv)}</div><div class="chips"><span class="pill ${typeClass(v.type)}">${typeLabel(v.type)}</span>${v.strongGroup ? `<span class="pill group-pill">${groupLabel(v.strongGroup)}</span>` : ''}</div></div><div class="inline" style="margin:10px 0 8px">${esc(lineString(v))}</div><div class="helper">Помилок: ${p.errors} • Важко: ${p.hard} • Не знаю: ${p.dontKnow}</div></div>`;
+      }).join('');
+    }
+
+    function renderStats(){
+      const arr = VERBS.map(v => ({v,p:getVerbProgress(v)}));
+      const learned = arr.filter(x => x.p.shown > 0).length;
+      const correct = state.stats.correct;
+      const wrong = state.stats.wrong;
+      const total = correct + wrong;
+      const rate = total ? Math.round(correct / total * 100) : 0;
+      const active = arr.filter(x => x.p.nextDue > 0 && x.p.ease < 5).length;
+      const mastered = arr.filter(x => x.p.ease >= 5 && x.p.success >= 2).length;
+      els.statLearned.textContent = learned;
+      els.statCorrect.textContent = correct;
+      els.statWrong.textContent = wrong;
+      els.statRate.textContent = `${rate}%`;
+      els.statActiveReview.textContent = active;
+      els.statMastered.textContent = mastered;
+      els.statSession.textContent = state.stats.sessionDone;
+      els.statTotal.textContent = VERBS.length;
+      const sorted = [...arr].sort((a,b)=>(b.p.errors+b.p.hard+b.p.dontKnow)-(a.p.errors+a.p.hard+a.p.dontKnow)).slice(0,20);
+      els.problemTableBody.innerHTML = sorted.map(({v,p}) => `<tr><td class="inline" style="font-size:18px">${esc(lineString(v))}</td><td><span class="pill ${typeClass(v.type)}">${typeLabel(v.type)}</span></td><td>${v.strongGroup ? `<span class="pill group-pill">${groupLabel(v.strongGroup)}</span>` : '—'}</td><td>${p.errors}</td><td>${p.ease}</td></tr>`).join('');
+    }
+
+    function renderList(){
+      const rows = getCategoryVerbs(getFilteredVerbs());
+      els.listCountChip.textContent = `${rows.length} дієслів`;
+      els.verbTableBody.innerHTML = rows.map(v => `<tr><td class="inline">${esc(lineString(v))}</td><td><span class="pill ${typeClass(v.type)}">${typeLabel(v.type)}</span></td><td>${v.strongGroup ? `<span class="pill group-pill">${groupLabel(v.strongGroup)}</span>` : '—'}</td></tr>`).join('');
+    }
+
+    function renderSettings(){
+      syncSelect(els.learnMode, els.settingsLearnMode);
+      syncSelect(els.categoryFilter, els.settingsCategory);
+      syncSelect(els.sessionSize, els.settingsSessionSize);
+      syncSelect(els.strongGroupFilter, els.settingsStrongGroup);
+    }
+
+    function syncSelect(from,to){ to.innerHTML = from.innerHTML; to.value = from.value; }
+    function applyStateToControls(){
+      els.learnMode.value = state.settings.learnMode;
+      els.sessionSize.value = String(state.settings.sessionSize);
+      els.categoryFilter.value = state.settings.categoryFilter;
+      els.strongGroupFilter.value = state.settings.strongGroupFilter;
+      els.globalSearch.value = state.settings.globalSearch;
+      els.globalTypeFilter.value = state.settings.globalTypeFilter;
+      els.globalStrongGroupFilter.value = state.settings.globalStrongGroupFilter;
+    }
+    function saveControlsToState(){
+      state.settings.learnMode = els.learnMode.value;
+      state.settings.sessionSize = Number(els.sessionSize.value);
+      state.settings.categoryFilter = els.categoryFilter.value;
+      state.settings.strongGroupFilter = els.strongGroupFilter.value;
+      saveState();
+    }
+
+    function renderAll(){ renderLearn(); renderTest(); renderErrors(); renderStats(); renderSettings(); renderList(); }
+    function switchTab(name){
+      els.tabs.forEach(b => b.classList.toggle('active', b.dataset.tab===name));
+      Object.entries(els.views).forEach(([k,v]) => v.classList.toggle('active', k===name));
+      renderAll();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function exportState(){
+      const data = JSON.stringify(state,null,2);
+      const file = new File([data], 'de-verbs-iphone-progress.json', { type:'application/json' });
+      if(navigator.share && navigator.canShare && navigator.canShare({ files:[file] })){
+        navigator.share({ files:[file], title:'DE Verbs progress' }).catch(()=>{});
+        return;
+      }
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'de-verbs-iphone-progress.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 800);
+    }
+
+    els.tabs.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+    ['change','input'].forEach(evt => {
+      els.learnMode.addEventListener(evt, () => { saveControlsToState(); renderLearn(); });
+      els.sessionSize.addEventListener(evt, saveControlsToState);
+      els.categoryFilter.addEventListener(evt, () => { saveControlsToState(); renderAll(); });
+      els.strongGroupFilter.addEventListener(evt, () => { saveControlsToState(); renderAll(); });
+      els.globalSearch.addEventListener(evt, () => { state.settings.globalSearch = els.globalSearch.value; saveState(); renderAll(); });
+      els.globalTypeFilter.addEventListener(evt, () => { state.settings.globalTypeFilter = els.globalTypeFilter.value; saveState(); renderAll(); });
+      els.globalStrongGroupFilter.addEventListener(evt, () => { state.settings.globalStrongGroupFilter = els.globalStrongGroupFilter.value; saveState(); renderAll(); });
+    });
+
+    els.restartSessionBtn.addEventListener('click', () => { saveControlsToState(); buildSessionQueue('normal'); renderAll(); });
+    els.nextLearnBtn.addEventListener('click', () => {
+      const total = state.session.queue.length;
+      if(!total) return;
+      state.session.index = Math.min(state.session.index + 1, total - 1);
+      state.session.answerShown = false;
+      saveState(); renderLearn();
+    });
+    els.showAnswerBtn.addEventListener('click', () => { state.session.answerShown = true; saveState(); renderLearn(); });
+    els.knowBtn.addEventListener('click', () => advanceLearn('know'));
+    els.hardBtn.addEventListener('click', () => advanceLearn('hard'));
+    els.dontKnowBtn.addEventListener('click', () => advanceLearn('dontKnow'));
+    els.laterBtn.addEventListener('click', () => advanceLearn('later'));
+    els.startTestBtn.addEventListener('click', startTest);
+    els.practiceErrorsBtn.addEventListener('click', () => { buildSessionQueue('errors'); switchTab('learn'); });
+    els.clearErrorsBtn.addEventListener('click', () => {
+      state.errors = [];
+      VERBS.forEach(v => { const p = getVerbProgress(v); p.errors=0; p.hard=0; p.dontKnow=0; });
+      saveState(); renderAll();
+    });
+    els.saveSettingsBtn.addEventListener('click', () => {
+      state.settings.learnMode = els.settingsLearnMode.value;
+      state.settings.categoryFilter = els.settingsCategory.value;
+      state.settings.sessionSize = Number(els.settingsSessionSize.value);
+      state.settings.strongGroupFilter = els.settingsStrongGroup.value;
+      saveState(); applyStateToControls(); renderAll(); switchTab('learn');
+    });
+    els.resetProgressBtn.addEventListener('click', () => {
+      if(!confirm('Скинути весь прогрес?')) return;
+      state = makeDefaultState();
+      testState = { queue:[], index:0, mode:'full', finished:false, result:{correct:0,total:0} };
+      saveState(); applyStateToControls(); renderAll(); switchTab('learn');
+    });
+    els.exportBtn.addEventListener('click', exportState);
+    els.importInput.addEventListener('change', async e => {
+      const file = e.target.files?.[0]; if(!file) return;
+      try{
+        const text = await file.text();
+        const data = JSON.parse(text);
+        const base = makeDefaultState();
+        state = {
+          ...base,
+          ...data,
+          settings:{...base.settings,...(data.settings||{})},
+          stats:{...base.stats,...(data.stats||{})},
+          perVerb:{...base.perVerb,...(data.perVerb||{})},
+          session:{...base.session,...(data.session||{})},
+          errors:Array.isArray(data.errors) ? data.errors : []
+        };
+        saveState(); applyStateToControls(); renderAll(); alert('Імпорт виконано.');
+      }catch{ alert('Не вдалося імпортувати JSON.'); }
+      finally{ e.target.value=''; }
+    });
+
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Enter'){
+        const active = document.activeElement;
+        if(active && active.matches('[data-answer-key]') && $('checkTestBtn')) $('checkTestBtn').click();
+      }
+    });
+
+    populateGroupSelects();
+    applyStateToControls();
+    renderAll();
+    showInstallHint();
+    switchTab('learn');
+  </script>
+</body>
+</html>
